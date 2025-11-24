@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Test Razorpay Payment</h2>
+
+    <button id="payBtn">Pay Now</button>
+
+    <script>
+        console.log("Script loaded!!")
+    </script>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        document.getElementById("payBtn").onclick = function () {
+            var options = {
+                "key":`<%=razorpayKey%>`,
+                "amount": 100, 
+                "currency": "INR",
+                "name": "Test App",
+                "description": "Consultation Fee",
+                "order_id": '<%=orderId%>',
+                "handler": function (response){
+                    // Once payment is successful — print IDs
+                    console.log(response);
+                    alert("Payment Success!" + JSON.stringify(response));
+                },
+                "prefill": {
+                    "name": "Neffi",
+                    "email": "neffi@example.com",
+                    "contact": "9876543210"
+                },
+                "theme": { "color": "#3399cc" }
+            };
+            var rzp = new Razorpay(options);
+            rzp.open();
+        }
+    </script>
+</body>
+</html>
